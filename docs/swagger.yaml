@@ -1,0 +1,195 @@
+basePath: /
+definitions:
+  domain.UpdateUserInput:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  domain.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Simple API server for user
+  title: User Service
+  version: "1.0"
+paths:
+  /api/users:
+    get:
+      consumes:
+      - application/json
+      description: Returns a list of users based on provided conditions, including
+        optional pagination and filtering parameters
+      parameters:
+      - description: Limit number of users per page
+        in: query
+        name: limit
+        type: integer
+      - description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            items:
+              $ref: '#/definitions/domain.User'
+            type: array
+        "400":
+          description: Bad Request - Invalid data or parsing failure
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get users with optional filtering and pagination
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user by receiving user details in the request body
+      parameters:
+      - description: User information
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/domain.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request - Invalid input data
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create a new user
+      tags:
+      - user
+  /api/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a user from the system by the given ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request - Invalid ID or deletion failure
+          schema:
+            type: string
+        "404":
+          description: Not Found - User not found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a user by ID
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: Returns user data by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User details
+          schema:
+            $ref: '#/definitions/domain.User'
+        "400":
+          description: Bad Request - Invalid ID format
+          schema:
+            type: string
+        "404":
+          description: Not Found - User not found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get user by ID
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: Updates the user information based on the provided ID and new data
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User data to update
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request - Invalid data or validation failure
+          schema:
+            type: string
+        "404":
+          description: Not Found - User not found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a user by ID
+      tags:
+      - user
+swagger: "2.0"
