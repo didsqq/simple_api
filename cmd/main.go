@@ -13,7 +13,6 @@ import (
 	"github.com/didsqq/user_api/internal/handler"
 	"github.com/didsqq/user_api/internal/repository"
 	"github.com/didsqq/user_api/internal/service"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
@@ -25,9 +24,9 @@ import (
 //	@BasePath	/
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	dbPass := getEnvVar("DB_PASSWORD")
 	dbUser := getEnvVar("DB_USER")

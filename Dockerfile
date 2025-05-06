@@ -18,7 +18,7 @@ FROM alpine:latest
 # Добавляем исполняемый файл из первой стадии в корневую директорию контейнера
 COPY --from=builder /app/main /main
 
-COPY --from=builder /app/.env .env
+# COPY --from=builder /app/.env .env
 # Открываем порт 8080
 EXPOSE 8080
 
